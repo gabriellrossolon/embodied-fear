@@ -8,6 +8,7 @@ public class HudManager : MonoBehaviour
     public static HudManager Instance { get; private set; }
 
     public Slider lanternSlider;
+    public GameObject gameOverHud;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -18,5 +19,11 @@ public class HudManager : MonoBehaviour
         {
             Instance = this;
         }
+    }
+
+    public IEnumerator StopTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Time.timeScale = 0;
     }
 }
