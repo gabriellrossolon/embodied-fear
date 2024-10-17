@@ -24,8 +24,8 @@ public class MonsterBehavior : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Destroy(this.gameObject);
             SoundManager.Instance.eventsSoundSource.PlayOneShot(jumpScareAudio);
+            Destroy(this.gameObject);
             jumpScare.SetActive(true);
             HudManager.Instance.gameOverHud.SetActive(true);
             HudManager.Instance.StopTime(2);

@@ -20,7 +20,7 @@ public class PlayerInteraction : MonoBehaviour
     }
     private void Update()
     {
-        LanternManagement();
+        if (Inventory.Instance.lanternEquipped) { LanternManagement(); }
     }
 
     private void LanternManagement()
