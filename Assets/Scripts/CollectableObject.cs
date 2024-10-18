@@ -49,6 +49,7 @@ public class CollectableObject : MonoBehaviour
             SoundManager.Instance.eventsSoundSource.PlayOneShot(pickupSound);
             Inventory.Instance.lanternEquipped = true;
             Destroy(this.gameObject);
+            Inventory.Instance.lanternObject.SetActive(true);
         }
     }
 }

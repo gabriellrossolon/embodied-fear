@@ -7,6 +7,7 @@ public class Inventory : MonoBehaviour
     public static Inventory Instance { get; private set; }
 
     public bool lanternEquipped;
+    public GameObject lanternObject;
 
     private void Awake()
     {

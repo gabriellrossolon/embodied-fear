@@ -171,19 +171,20 @@ namespace StarterAssets
 
             if (targetSpeed != 0.0f)
             {
-                anim.SetBool("isWalk", true);
-                if (!SoundManager.Instance.stepSoundSource.isPlaying)
-                {
-                    SoundManager.Instance.stepSoundSource.Play();
-                }
+                anim.SetBool("isWalk", true);          
             }
             else
             {
                 anim.SetBool("isWalk", false);
-                if (SoundManager.Instance.stepSoundSource.isPlaying)
-                {
-                    SoundManager.Instance.stepSoundSource.Stop();
-                }
+            }
+
+			if (_input.sprint)
+			{
+                anim.SetBool("isRun", true);
+            }
+			else
+			{
+                anim.SetBool("isRun",false);
             }
 
             // a reference to the players current horizontal velocity

@@ -15,10 +15,10 @@ public class EventTrigger : MonoBehaviour
             if (activeMonsterCrawling)
             {
                 monsterCrawling.SetActive(true);
-                SoundManager.Instance.eventsSoundSource.PlayOneShot(eventAudio);
+                //SoundManager.Instance.eventsSoundSource.PlayOneShot(eventAudio);
                 //Destroy(this.gameObject);
                 activeMonsterCrawling = false;
-                Destroy(monsterCrawling, 5f);
+                Destroy(monsterCrawling, 7f);
             }
             
         }
