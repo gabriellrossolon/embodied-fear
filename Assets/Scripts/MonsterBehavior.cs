@@ -29,6 +29,8 @@ public class MonsterBehavior : MonoBehaviour
             jumpScare.SetActive(true);
             HudManager.Instance.gameOverHud.SetActive(true);
             HudManager.Instance.StopTime(2);
+            GlitchEffectManager.Instance.glitchMat.SetFloat("NoiseAmount", 100f);
+            GlitchEffectManager.Instance.glitchMat.SetFloat("GlitchStrength", 100f);
         }
     }
 }

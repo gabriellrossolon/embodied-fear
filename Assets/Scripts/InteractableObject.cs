@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
+using DoorScript;
 
 public class InteractableObject : MonoBehaviour
 {
     private GameObject playerObject;
 
     public bool phoneObject;
+    public bool doorLocked;
+    public bool doorOpenable;
 
     public AudioClip interactionSound;
 
@@ -28,6 +31,7 @@ public class InteractableObject : MonoBehaviour
         {
             HudManager.Instance.textWarn.SetActive(true);
             if (phoneObject) { AnswerCall(); }
+            if (doorLocked || doorOpenable) { OpenDoor(); }
         }
         else
         {
@@ -49,6 +53,23 @@ public class InteractableObject : MonoBehaviour
             SoundManager.Instance.eventsSoundSource.PlayOneShot(interactionSound);
             AudioSource aS = GetComponentInChildren<AudioSource>();
             aS.enabled = false;
+        }
+    }
+
+    private void OpenDoor()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (doorLocked)
+            {
+                AudioSource aS = GetComponent<AudioSource>();
+                aS.PlayOneShot(interactionSound);
+            }
+            if (doorOpenable)
+            {
+                HudManager.Instance.textWarn.SetActive(false);
+                gameObject.GetComponent<Door>().OpenDoor();
+            }
         }
     }
 }
