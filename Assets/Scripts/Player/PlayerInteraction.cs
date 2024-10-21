@@ -48,7 +48,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (lanternRecharging)
         {
-            lanternLightTimer += Time.deltaTime;
+            lanternLightTimer += Time.deltaTime * 2;
             HudManager.Instance.lanternSlider.fillRect.GetComponent<Image>().color = Color.Lerp(new Color(185f / 255f, 68f / 255f, 32f / 255f), new Color(171f / 255f, 157f / 255f, 94f / 255f), lanternLightTimer / lanternMaxLightTime);
             if (lanternLightTimer >= lanternMaxLightTime)
             {
