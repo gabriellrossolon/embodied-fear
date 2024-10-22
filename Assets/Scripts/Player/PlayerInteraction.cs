@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class PlayerInteraction : MonoBehaviour
 {
+    private GameObject monsterObject;
+
     public GameObject lantern;
     private bool light_actived = false;
     public float lanternMaxLightTime;
@@ -13,14 +16,27 @@ public class PlayerInteraction : MonoBehaviour
     private bool lanternRecharging = false;
     private bool canUseLantern = true;
     public AudioClip lanternClick;
+
+    public float actualStamina;
+    public float maxStamina = 100f;
+    public bool canRun = true;
     private void Start()
     {
         lanternLightTimer = lanternMaxLightTime;
         HudManager.Instance.lanternSlider.maxValue = lanternMaxLightTime;
+
+        actualStamina = maxStamina;
+
+        monsterObject = GameObject.FindGameObjectWithTag("Monster");
     }
     private void Update()
     {
         if (Inventory.Instance.lanternEquipped) { LanternManagement(); }
+
+        if(actualStamina <= 0)
+        {
+            canRun = false;
+        }
     }
 
     private void LanternManagement()
@@ -36,6 +52,26 @@ public class PlayerInteraction : MonoBehaviour
         {
             lanternLightTimer -= Time.deltaTime;
         }
+
+        if (light_actived == true)
+        {
+            RaycastHit lanternHit;
+            Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out lanternHit);
+
+            if (lanternHit.transform.tag == "Monster")
+            {
+                monsterObject.GetComponent<MonsterBehavior>().navMeshAgent.speed = 0;
+            }
+            else
+            {
+                monsterObject.GetComponent<MonsterBehavior>().navMeshAgent.speed = monsterObject.GetComponent<MonsterBehavior>().originalMonsterSpeed;
+            }
+        }
+        else
+        {
+            monsterObject.GetComponent<MonsterBehavior>().navMeshAgent.speed = monsterObject.GetComponent<MonsterBehavior>().originalMonsterSpeed;
+        }
+
 
         if (lanternLightTimer <= 0)
         {

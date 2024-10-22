@@ -91,6 +91,7 @@ namespace StarterAssets
 		//MY ALTS
 		private Animator anim;
 		public GameObject soundManager;
+		public PlayerInteraction playerInteract;
 
 		private void Awake()
 		{
@@ -98,9 +99,10 @@ namespace StarterAssets
 			if (_mainCamera == null)
 			{
 				_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-				anim = GetComponentInChildren<Animator>();
 			}
-		}
+            anim = GetComponentInChildren<Animator>();
+			playerInteract = GetComponent<PlayerInteraction>();
+        }
 
 		private void Start()
 		{
@@ -161,7 +163,27 @@ namespace StarterAssets
 		private void Move()
 		{
 			// set target speed based on move speed, sprint speed and if sprint is pressed
-			float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+			//float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+			float targetSpeed;
+            if (_input.sprint && playerInteract.canRun)
+			{
+				targetSpeed = SprintSpeed;
+                anim.SetBool("isRun", true);
+                playerInteract.actualStamina -= Time.deltaTime * 24;
+            }
+			else
+			{
+                targetSpeed = MoveSpeed;
+                anim.SetBool("isRun", false);
+                if (playerInteract.actualStamina <= playerInteract.maxStamina)
+                {
+                    playerInteract.actualStamina += Time.deltaTime * 12;
+					if(playerInteract.actualStamina > 25)
+					{
+						playerInteract.canRun = true;
+					}
+                }
+            }
 
 			// a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -176,15 +198,6 @@ namespace StarterAssets
             else
             {
                 anim.SetBool("isWalk", false);
-            }
-
-			if (_input.sprint)
-			{
-                anim.SetBool("isRun", true);
-            }
-			else
-			{
-                anim.SetBool("isRun",false);
             }
 
             // a reference to the players current horizontal velocity
