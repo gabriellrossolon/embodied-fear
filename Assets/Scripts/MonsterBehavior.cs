@@ -14,6 +14,10 @@ public class MonsterBehavior : MonoBehaviour
 
     public float originalMonsterSpeed;
 
+    private void Awake()
+    {
+        
+    }
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();

@@ -27,7 +27,7 @@ public class PlayerInteraction : MonoBehaviour
 
         actualStamina = maxStamina;
 
-        monsterObject = GameObject.FindGameObjectWithTag("Monster");
+        monsterObject = ObjectiveManager.Instance.monster;
     }
     private void Update()
     {
@@ -64,12 +64,18 @@ public class PlayerInteraction : MonoBehaviour
             }
             else
             {
-                monsterObject.GetComponent<MonsterBehavior>().navMeshAgent.speed = monsterObject.GetComponent<MonsterBehavior>().originalMonsterSpeed;
+                if(monsterObject != null && monsterObject.activeSelf)
+                {
+                    monsterObject.GetComponent<MonsterBehavior>().navMeshAgent.speed = monsterObject.GetComponent<MonsterBehavior>().originalMonsterSpeed;
+                }
             }
         }
         else
         {
-            monsterObject.GetComponent<MonsterBehavior>().navMeshAgent.speed = monsterObject.GetComponent<MonsterBehavior>().originalMonsterSpeed;
+            if (monsterObject != null && monsterObject.activeSelf)
+            {
+                monsterObject.GetComponent<MonsterBehavior>().navMeshAgent.speed = monsterObject.GetComponent<MonsterBehavior>().originalMonsterSpeed;
+            }
         }
 
 

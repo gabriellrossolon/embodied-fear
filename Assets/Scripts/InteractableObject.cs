@@ -7,8 +7,15 @@ public class InteractableObject : MonoBehaviour
     private GameObject playerObject;
 
     public bool phoneObject;
+    public bool radioObject;
     public bool doorLocked;
     public bool doorOpenable;
+
+    public bool finalDoor;
+
+    public int radioStation = 0;
+    public AudioClip radioMusicOne;
+    public AudioClip radioMusicTwo;
 
     public AudioClip interactionSound;
 
@@ -32,6 +39,7 @@ public class InteractableObject : MonoBehaviour
             HudManager.Instance.textWarn.SetActive(true);
             if (phoneObject) { AnswerCall(); }
             if (doorLocked || doorOpenable) { OpenDoor(); }
+            if (radioObject) { TurnRadioStation(); }
         }
         else
         {
@@ -53,6 +61,42 @@ public class InteractableObject : MonoBehaviour
             SoundManager.Instance.eventsSoundSource.PlayOneShot(interactionSound);
             AudioSource aS = GetComponentInChildren<AudioSource>();
             aS.enabled = false;
+            ObjectiveManager.Instance.objectiveOneCompleted = true;
+        }
+    }
+
+    private void TurnRadioStation()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (radioStation == 0)
+            {
+                SoundManager.Instance.eventsSoundSource.PlayOneShot(interactionSound);
+                AudioSource aS = GetComponent<AudioSource>();
+                aS.clip = radioMusicOne;
+                aS.Play();
+                radioStation++;
+            }
+            else if (radioStation == 1)
+            {
+                SoundManager.Instance.eventsSoundSource.PlayOneShot(interactionSound);
+                AudioSource aS = GetComponent<AudioSource>();
+                aS.clip = radioMusicTwo;
+                aS.Play();
+                radioStation++;
+            }
+            else if (radioStation == 2)
+            {
+                SoundManager.Instance.eventsSoundSource.PlayOneShot(interactionSound);
+                AudioSource aS = GetComponent<AudioSource>();
+                aS.clip = null;
+                aS.Stop();
+
+                gameObject.GetComponent<BoxCollider>().enabled = false;
+                HudManager.Instance.textWarn.SetActive(false);
+
+                ObjectiveManager.Instance.objectiveTwoComplete = true;
+            }
         }
     }
 
