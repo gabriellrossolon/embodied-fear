@@ -8,6 +8,7 @@ public class InteractableObject : MonoBehaviour
 
     public bool phoneObject;
     public bool radioObject;
+    public bool tvObject;
     public bool doorLocked;
     public bool doorOpenable;
 
@@ -97,6 +98,20 @@ public class InteractableObject : MonoBehaviour
 
                 ObjectiveManager.Instance.objectiveTwoComplete = true;
             }
+        }
+    }
+
+    private void ChangeTvChannel()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            HudManager.Instance.textWarn.SetActive(false);
+            gameObject.GetComponent<BoxCollider>().enabled = false;
+            SoundManager.Instance.eventsSoundSource.PlayOneShot(interactionSound);
+            AudioSource aS = GetComponent<AudioSource>();
+            aS.enabled = false;
+            GetComponentInChildren<Light>().enabled = false;
+            ObjectiveManager.Instance.objectiveThreeComplete = true;
         }
     }
 
