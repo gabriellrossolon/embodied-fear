@@ -14,6 +14,7 @@ public class HudManager : MonoBehaviour
     public GameObject lanternInHud;
 
     public GameObject gameOverHud;
+    public GameObject winHud;
 
     public GameObject textWarn;
 

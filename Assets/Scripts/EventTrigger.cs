@@ -8,6 +8,8 @@ public class EventTrigger : MonoBehaviour
     public bool activeMonsterCrawling;
     public AudioClip eventAudio;
 
+    public bool winTrigger;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -19,6 +21,14 @@ public class EventTrigger : MonoBehaviour
                 //Destroy(this.gameObject);
                 activeMonsterCrawling = false;
                 Destroy(monsterCrawling, 7f);
+            }
+
+            if (winTrigger)
+            {
+                HudManager.Instance.winHud.SetActive(true);
+                SoundManager.Instance.eventsSoundSource.PlayOneShot(eventAudio);
+                HudManager.Instance.StopTime(3f);
+
             }
             
         }
