@@ -41,6 +41,7 @@ public class InteractableObject : MonoBehaviour
             if (phoneObject) { AnswerCall(); }
             if (doorLocked || doorOpenable) { OpenDoor(); }
             if (radioObject) { TurnRadioStation(); }
+            if (tvObject) { ChangeTvChannel(); }
         }
         else
         {
@@ -111,6 +112,7 @@ public class InteractableObject : MonoBehaviour
             AudioSource aS = GetComponent<AudioSource>();
             aS.enabled = false;
             GetComponentInChildren<Light>().enabled = false;
+            GetComponentInChildren<FlickerLight>().enabled = false;
             ObjectiveManager.Instance.objectiveThreeComplete = true;
         }
     }
