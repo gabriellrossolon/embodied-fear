@@ -11,6 +11,9 @@ public class MenuManager : MonoBehaviour
     public AudioSource eventSoundSource;
     public AudioClip hoverSound;
 
+    public GameObject optionsHud;
+    private bool optionsActived = false;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -27,5 +30,11 @@ public class MenuManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         SceneManager.LoadScene("SampleScene");
+    }
+
+    public void CloseOpenOptions()
+    {
+        optionsActived = !optionsActived;
+        optionsHud.SetActive(optionsActived);
     }
 }

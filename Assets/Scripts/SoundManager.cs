@@ -10,6 +10,8 @@ public class SoundManager : MonoBehaviour
     public AudioSource eventsSoundSource;
     public AudioSource breathSoundSource;
 
+    public AudioClip hoverSound;
+
     public AudioClip[] breathClips;
     private void Awake()
     {

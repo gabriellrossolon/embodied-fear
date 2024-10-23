@@ -6,6 +6,13 @@ public class BtnBehavior : MonoBehaviour, IPointerEnterHandler
 {
     public void OnPointerEnter(PointerEventData eventData)
     {
-        MenuManager.Instance.eventSoundSource.PlayOneShot(MenuManager.Instance.hoverSound);
+        if (MenuManager.Instance != null)
+        {
+            MenuManager.Instance.eventSoundSource.PlayOneShot(MenuManager.Instance.hoverSound);
+        }
+        else
+        {
+            SoundManager.Instance.eventsSoundSource.PlayOneShot(SoundManager.Instance.hoverSound);
+        }
     }
 }

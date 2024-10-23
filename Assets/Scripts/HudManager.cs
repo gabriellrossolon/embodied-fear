@@ -15,10 +15,18 @@ public class HudManager : MonoBehaviour
 
     public GameObject gameOverHud;
     public GameObject winHud;
+    public GameObject pausedHud;
+    public GameObject optionsHud;
+
+    private bool isPaused = false;
+    private bool optionsOpened = false;
 
     public GameObject textWarn;
 
     public Slider staminaBar;
+
+    public Slider globalVolumeSlider;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -34,6 +42,14 @@ public class HudManager : MonoBehaviour
         playerInteract = playerObject.GetComponent<PlayerInteraction>();
     }
 
+    private void Start()
+    {
+        if(VolumeSettings.Instance != null)
+        {
+            VolumeSettings.Instance.ChangeSlider(globalVolumeSlider);
+        }
+    }
+
     public IEnumerator StopTime(float time)
     {
         yield return new WaitForSeconds(time);
@@ -44,6 +60,8 @@ public class HudManager : MonoBehaviour
     {
         if (Inventory.Instance.lanternEquipped) { lanternInHud.SetActive(true); }
         StaminaBar();
+
+        if (Input.GetKeyDown(KeyCode.Escape)) { PauseGame(); }
 
     }
 
@@ -59,5 +77,45 @@ public class HudManager : MonoBehaviour
         {
             staminaBar.gameObject.SetActive(true);
         }
+    }
+
+    public void PauseGame()
+    {
+        isPaused = !isPaused;
+        pausedHud.SetActive(isPaused);
+
+        if (isPaused == true)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Time.timeScale = 0f;
+            if (VolumeSettings.Instance != null)
+            {
+                VolumeSettings.Instance.globalMixer.SetFloat("GlobalPitch", 0f);
+            }
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            Time.timeScale = 1f;
+            if(VolumeSettings.Instance != null)
+            {
+                VolumeSettings.Instance.globalMixer.SetFloat("GlobalPitch", 1f);
+            }
+
+        }
+    }
+
+    public void OpenCloseOptions()
+    {
+        optionsOpened = !optionsOpened;
+        optionsHud.SetActive(optionsOpened);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log("Quitting...");
     }
 }
