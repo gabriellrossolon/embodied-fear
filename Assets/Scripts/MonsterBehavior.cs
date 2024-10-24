@@ -52,6 +52,8 @@ public class MonsterBehavior : MonoBehaviour
             Destroy(this.gameObject);
             jumpScare.SetActive(true);
             HudManager.Instance.gameOverHud.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             HudManager.Instance.StopTime(2);
             HudManager.Instance.StopAudio(2);
             //GlitchEffectManager.Instance.glitchMat.SetFloat("NoiseAmount", 100f);

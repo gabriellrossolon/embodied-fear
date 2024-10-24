@@ -99,12 +99,12 @@ Material:
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
     - _GlitchEffectActive: 0
-    - _GlitchStrength: 400
+    - _GlitchStrength: 500
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _NoiseAmount: 400
+    - _NoiseAmount: 500
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0

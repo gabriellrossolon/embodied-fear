@@ -83,18 +83,23 @@ public class PlayerInteraction : MonoBehaviour
             SoundManager.Instance.eventsSoundSource.PlayOneShot(lanternClick);
             lantern.GetComponent<Light>().enabled = false;
             light_actived = false;
-            canUseLantern = false;
+            //canUseLantern = false;
+            lanternRecharging = true;
+        }
+
+        if(light_actived == false && lanternLightTimer > 0)
+        {
             lanternRecharging = true;
         }
 
         if (lanternRecharging)
         {
-            lanternLightTimer += Time.deltaTime * 3f;
+            lanternLightTimer += Time.deltaTime * 0.5f;
             HudManager.Instance.lanternSlider.fillRect.GetComponent<Image>().color = Color.Lerp(new Color(185f / 255f, 68f / 255f, 32f / 255f), new Color(171f / 255f, 157f / 255f, 94f / 255f), lanternLightTimer / lanternMaxLightTime);
             if (lanternLightTimer >= lanternMaxLightTime)
             {
                 lanternRecharging = false;
-                canUseLantern = true;
+                //canUseLantern = true;
             }
         }
 

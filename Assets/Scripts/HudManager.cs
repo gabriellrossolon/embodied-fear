@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class HudManager : MonoBehaviour
 {
@@ -68,6 +70,10 @@ public class HudManager : MonoBehaviour
         StaminaBar();
 
         if (Input.GetKeyDown(KeyCode.Escape)) { PauseGame(); }
+        if (Input.GetKeyDown(KeyCode.Escape) && optionsHud.activeSelf)
+        {
+            optionsHud.SetActive(false);
+        }
 
     }
 
@@ -123,5 +129,17 @@ public class HudManager : MonoBehaviour
     {
         Application.Quit();
         Debug.Log("Quitting...");
+    }
+
+    public void PlayAgain()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("Menu");
     }
 }
