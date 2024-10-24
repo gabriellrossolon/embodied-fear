@@ -11,6 +11,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource breathSoundSource;
 
     public AudioClip hoverSound;
+    public AudioClip objectiveActived;
 
     public AudioClip[] breathClips;
     private void Awake()

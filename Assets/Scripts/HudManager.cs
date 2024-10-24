@@ -56,6 +56,12 @@ public class HudManager : MonoBehaviour
         Time.timeScale = 0;
     }
 
+    public IEnumerator StopAudio(float time)
+    {
+        yield return new WaitForSeconds(time);
+        VolumeSettings.Instance.globalMixer.SetFloat("GlobalPitch", 0f);
+    }
+
     private void Update()
     {
         if (Inventory.Instance.lanternEquipped) { lanternInHud.SetActive(true); }

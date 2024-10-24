@@ -55,10 +55,9 @@ public class PlayerInteraction : MonoBehaviour
 
         if (light_actived == true)
         {
-            RaycastHit lanternHit;
-            Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out lanternHit);
+            Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit lanternHit);
 
-            if (lanternHit.transform.tag == "Monster")
+            if (lanternHit.transform.CompareTag("Monster"))
             {
                 monsterObject.GetComponent<MonsterBehavior>().navMeshAgent.speed = 0;
             }
@@ -81,16 +80,16 @@ public class PlayerInteraction : MonoBehaviour
 
         if (lanternLightTimer <= 0)
         {
+            SoundManager.Instance.eventsSoundSource.PlayOneShot(lanternClick);
             lantern.GetComponent<Light>().enabled = false;
             light_actived = false;
-            SoundManager.Instance.eventsSoundSource.PlayOneShot(lanternClick);
             canUseLantern = false;
             lanternRecharging = true;
         }
 
         if (lanternRecharging)
         {
-            lanternLightTimer += Time.deltaTime * 2;
+            lanternLightTimer += Time.deltaTime * 3f;
             HudManager.Instance.lanternSlider.fillRect.GetComponent<Image>().color = Color.Lerp(new Color(185f / 255f, 68f / 255f, 32f / 255f), new Color(171f / 255f, 157f / 255f, 94f / 255f), lanternLightTimer / lanternMaxLightTime);
             if (lanternLightTimer >= lanternMaxLightTime)
             {

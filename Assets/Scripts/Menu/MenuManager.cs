@@ -37,4 +37,9 @@ public class MenuManager : MonoBehaviour
         optionsActived = !optionsActived;
         optionsHud.SetActive(optionsActived);
     }
+    public void QuitGame()
+    {
+        Application.Quit();
+        Debug.Log("Quitting...");
+    }
 }

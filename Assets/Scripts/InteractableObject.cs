@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using DoorScript;
+using System.Collections;
 
 public class InteractableObject : MonoBehaviour
 {
@@ -64,6 +65,7 @@ public class InteractableObject : MonoBehaviour
             AudioSource aS = GetComponentInChildren<AudioSource>();
             aS.enabled = false;
             ObjectiveManager.Instance.objectiveOneCompleted = true;
+            StartCoroutine(ObjectiveCompleted());
         }
     }
 
@@ -98,6 +100,7 @@ public class InteractableObject : MonoBehaviour
                 HudManager.Instance.textWarn.SetActive(false);
 
                 ObjectiveManager.Instance.objectiveTwoComplete = true;
+                StartCoroutine(ObjectiveCompleted());
             }
         }
     }
@@ -114,6 +117,7 @@ public class InteractableObject : MonoBehaviour
             GetComponentInChildren<Light>().enabled = false;
             GetComponentInChildren<FlickerLight>().enabled = false;
             ObjectiveManager.Instance.objectiveThreeComplete = true;
+            StartCoroutine(ObjectiveCompleted());
         }
     }
 
@@ -132,5 +136,11 @@ public class InteractableObject : MonoBehaviour
                 gameObject.GetComponent<Door>().OpenDoor();
             }
         }
+    }
+
+    private IEnumerator ObjectiveCompleted()
+    {
+        yield return new WaitForSeconds(1.0f);
+        SoundManager.Instance.eventsSoundSource.PlayOneShot(SoundManager.Instance.objectiveActived);
     }
 }
