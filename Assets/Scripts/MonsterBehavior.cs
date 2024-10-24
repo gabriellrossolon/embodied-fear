@@ -16,7 +16,6 @@ public class MonsterBehavior : MonoBehaviour
 
     private void Awake()
     {
-        
     }
     void Start()
     {

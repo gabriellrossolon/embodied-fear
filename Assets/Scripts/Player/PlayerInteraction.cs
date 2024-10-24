@@ -12,7 +12,7 @@ public class PlayerInteraction : MonoBehaviour
     public GameObject lantern;
     private bool light_actived = false;
     public float lanternMaxLightTime;
-    private float lanternLightTimer;
+    public float lanternLightTimer;
     private bool lanternRecharging = false;
     private bool canUseLantern = true;
     public AudioClip lanternClick;
@@ -41,6 +41,8 @@ public class PlayerInteraction : MonoBehaviour
 
     private void LanternManagement()
     {
+        lantern.GetComponent<Light>().enabled = light_actived;
+
         if (Input.GetKeyDown(KeyCode.F) && canUseLantern)
         {
             light_actived = !light_actived;
@@ -48,13 +50,11 @@ public class PlayerInteraction : MonoBehaviour
             SoundManager.Instance.eventsSoundSource.PlayOneShot(lanternClick);
         }
 
-        if (lantern.GetComponent<Light>().isActiveAndEnabled)
-        {
-            lanternLightTimer -= Time.deltaTime;
-        }
-
         if (light_actived == true)
         {
+            lanternLightTimer -= Time.deltaTime;
+            lanternRecharging = false;
+
             Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit lanternHit);
 
             if (lanternHit.transform.CompareTag("Monster"))
@@ -77,13 +77,10 @@ public class PlayerInteraction : MonoBehaviour
             }
         }
 
-
         if (lanternLightTimer <= 0)
         {
             SoundManager.Instance.eventsSoundSource.PlayOneShot(lanternClick);
-            lantern.GetComponent<Light>().enabled = false;
             light_actived = false;
-            //canUseLantern = false;
             lanternRecharging = true;
         }
 
@@ -95,14 +92,13 @@ public class PlayerInteraction : MonoBehaviour
         if (lanternRecharging)
         {
             lanternLightTimer += Time.deltaTime * 0.5f;
-            HudManager.Instance.lanternSlider.fillRect.GetComponent<Image>().color = Color.Lerp(new Color(185f / 255f, 68f / 255f, 32f / 255f), new Color(171f / 255f, 157f / 255f, 94f / 255f), lanternLightTimer / lanternMaxLightTime);
+            //HudManager.Instance.lanternSlider.fillRect.GetComponent<Image>().color = Color.Lerp(new Color(185f / 255f, 68f / 255f, 32f / 255f), new Color(171f / 255f, 157f / 255f, 94f / 255f), lanternLightTimer / lanternMaxLightTime);
             if (lanternLightTimer >= lanternMaxLightTime)
             {
+                lanternLightTimer = lanternMaxLightTime;
                 lanternRecharging = false;
-                //canUseLantern = true;
             }
         }
-
         HudManager.Instance.lanternSlider.value = lanternLightTimer;
     }
 }
